@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.bindir       = 'bin'
   s.executables  = ['bin/anystyle']
-  s.required_ruby_version = '>= 2.2'
+  s.required_ruby_version = '>= 2.3'
 
   s.add_runtime_dependency('anystyle', '~>1.0')
   s.add_runtime_dependency('bibtex-ruby', '~>4.4')

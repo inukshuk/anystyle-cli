@@ -5,6 +5,12 @@ require 'anystyle/cli'
 
 include GLI::App
 
+program_desc 'Your swiss-army knife for parsing bibliographies'
+
+version '%s (cli %s, data %s)' % [
+  AnyStyle::VERSION, AnyStyle::CLI::VERSION, AnyStyle::Data::VERSION
+]
+
 desc 'Find references in documents'
 command :find do
 end
@@ -13,16 +19,7 @@ desc 'Parse references'
 command :parse do
 end
 
-desc 'Print version'
-command :version do |c|
-  c.action do
-    puts 'anystyle %s (cli %s, data %s)' % [
-      AnyStyle::VERSION, AnyStyle::CLI::VERSION, AnyStyle::Data::VERSION
-    ]
-  end
-end
-
-desc 'Print license'
+desc 'Print license information'
 command :license do |c|
   c.action do
     puts 'AnyStyle. Copyright (C) 2011-%d Sylvester Keil.' % Time.now.year
