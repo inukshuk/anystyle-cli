@@ -4,12 +4,30 @@ require 'gli'
 require 'anystyle/cli'
 
 include GLI::App
+include AnyStyle::CLI
 
-program_desc 'Your swiss-army knife for parsing bibliographies'
+program_desc 'Finds and parses bibliographic references'
 
 version '%s (cli %s, data %s)' % [
-  AnyStyle::VERSION, AnyStyle::CLI::VERSION, AnyStyle::Data::VERSION
+  AnyStyle::VERSION, VERSION, AnyStyle::Data::VERSION
 ]
+
+subcommand_option_handling :normal
+arguments :strict
+
+switch 'verbose',
+  desc: 'Print status messages to stderr'
+
+flag :adapter,
+  default_value: 'gdbm',
+  must_match: %w{ ruby memory gdbm },
+  desc: 'Set the dictionary adapter'
+
+
+pre do |opts|
+  AnyStyle::Dictionary.defaults[:adapter] = opts[:adapter]
+end
+
 
 desc 'Find references in documents'
 command :find do
@@ -19,11 +37,17 @@ desc 'Parse references'
 command :parse do
 end
 
+
 desc 'Print license information'
 command :license do |c|
   c.action do
-    puts 'AnyStyle. Copyright (C) 2011-%d Sylvester Keil.' % Time.now.year
+    puts 'AnyStyle.'
+    puts 'Copyright (C) 2011-%d Sylvester Keil.' % Time.now.year
     puts <<~EOL
+
+      Wapiti.
+      Copyright (C) 2009-2013 CNRS.
+
       All rights reserved.
 
       Redistribution and use in source and binary forms, with or without
@@ -46,6 +70,7 @@ command :license do |c|
       OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
       NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
       EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
     EOL
   end
 end
