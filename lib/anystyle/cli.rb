@@ -1,2 +1,5 @@
 require 'anystyle'
 require 'anystyle/cli/version'
+require 'anystyle/cli/command'
+require 'anystyle/cli/commands/find'
+require 'anystyle/cli/commands/parse'
