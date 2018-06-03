@@ -15,11 +15,14 @@ version '%s (cli %s, data %s)' % [
 subcommand_option_handling :normal
 arguments :strict
 
+config_file '.anystyle'
+
 switch 'verbose',
   desc: 'Print status messages to stderr'
 
 flag :adapter,
   default_value: 'gdbm',
+  arg_name: 'type',
   must_match: %w{ ruby memory gdbm },
   desc: 'Set the dictionary adapter'
 
@@ -29,18 +32,25 @@ pre do |opts|
 end
 
 
-desc 'Find references in documents'
-command :find do
+desc 'Find and extract references from text documents'
+command :find do |cmd|
+  cmd.action do |opts, params, args|
+    Commands::Find.new(opts).run(*args, **params)
+  end
 end
 
-desc 'Parse references'
-command :parse do
+desc 'Parse and convert references'
+arg :input
+command :parse do |cmd|
+  cmd.action do |opts, params, args|
+    Commands::Parse.new(opts).run(*args, **params)
+  end
 end
 
 
 desc 'Print license information'
-command :license do |c|
-  c.action do
+command :license do |cmd|
+  cmd.action do
     puts 'AnyStyle.'
     puts 'Copyright (C) 2011-%d Sylvester Keil.' % Time.now.year
     puts <<~EOL
