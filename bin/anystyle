@@ -15,14 +15,14 @@ version '%s (cli %s, data %s)' % [
 subcommand_option_handling :normal
 arguments :strict
 
-config_file '.anystyle'
+#config_file '.anystyle'
 
 switch 'verbose',
   desc: 'Print status messages to stderr'
 
 flag :adapter,
   default_value: 'gdbm',
-  arg_name: 'type',
+  arg_name: 'name',
   must_match: %w{ ruby memory gdbm },
   desc: 'Set the dictionary adapter'
 
@@ -42,8 +42,14 @@ end
 desc 'Parse and convert references'
 arg :input
 command :parse do |cmd|
+  cmd.flag [:f, :format],
+    default_value: 'json',
+    arg_name: 'name',
+    must_match: %w{ bib csl json xml },
+    desc: 'Set the output format'
+
   cmd.action do |opts, params, args|
-    Commands::Parse.new(opts).run(*args, **params)
+    Commands::Parse.new(opts).run(*args, params)
   end
 end
 

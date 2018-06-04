@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.license      = 'BSD-2-Clause'
   s.require_path = 'lib'
   s.bindir       = 'bin'
-  s.executables  = ['bin/anystyle']
+  s.executables  = ['anystyle']
   s.required_ruby_version = '>= 2.3'
 
   s.add_runtime_dependency('anystyle', '~>1.0')

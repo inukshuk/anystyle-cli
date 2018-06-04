@@ -18,16 +18,16 @@ module AnyStyle
 
         private
 
-        def walk(path)
-          path = File.expand_path(path)
-          raise ArgumentError, "path does not exist: #{path}" unless File.exists?(path)
+        def walk(input)
+          path = Pathname(input).expand_path
+          raise ArgumentError, "path does not exist: #{input}" unless path.exist?
 
-          if File.directory?(path)
-            Dir.children(path).each do |file|
-              yield File.join(path, file), path
+          if path.directory?
+            path.each_child do |file|
+              yield file, path unless file.directory?
             end
           else
-            yield path, File.basename(path)
+            yield path, path.dirname
           end
         end
 
