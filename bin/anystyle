@@ -15,6 +15,8 @@ version '%s (cli %s, data %s)' % [
 subcommand_option_handling :normal
 arguments :strict
 
+accept(Array) { |value| value.split(',') }
+
 #config_file '.anystyle'
 
 switch 'verbose',
@@ -45,7 +47,8 @@ command :parse do |cmd|
   cmd.flag [:f, :format],
     default_value: 'json',
     arg_name: 'name',
-    must_match: %w{ bib csl json xml },
+    type: Array,
+    must_match: /(bib|csl|json|xml)(,(bib|csl|json|xml))*/,
     desc: 'Set the output format'
 
   cmd.action do |opts, params, args|
