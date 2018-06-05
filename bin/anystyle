@@ -22,11 +22,24 @@ accept(Array) { |value| value.split(',') }
 switch 'verbose',
   desc: 'Print status messages to stderr'
 
-flag :adapter,
+switch ['w', 'overwrite'],
+  desc: 'Allow overwriting existing files'
+
+switch 'stdout',
+  desc: 'Print results directly to stdout'
+
+flag 'adapter',
   default_value: 'gdbm',
   arg_name: 'name',
   must_match: %w{ ruby memory gdbm },
   desc: 'Set the dictionary adapter'
+
+flag ['f', 'format'],
+  default_value: ['json'],
+  arg_name: 'name',
+  type: Array,
+  must_match: /(bib|csl|json|ref|ttx|txt|xml)(,(bib|csl|json|ref|ttx|txt|xml))*/,
+  desc: 'Set the output format'
 
 
 pre do |opts|
@@ -35,6 +48,8 @@ end
 
 
 desc 'Find and extract references from text documents'
+arg :input
+arg :output, :optional
 command :find do |cmd|
   cmd.action do |opts, params, args|
     Commands::Find.new(opts).run(*args, **params)
@@ -45,23 +60,10 @@ desc 'Parse and convert references'
 arg :input
 arg :output, :optional
 command :parse do |cmd|
-  cmd.flag [:f, :format],
-    default_value: ['json'],
-    arg_name: 'name',
-    type: Array,
-    must_match: /(bib|csl|json|xml)(,(bib|csl|json|xml))*/,
-    desc: 'Set the output format'
-
-  cmd.switch [:w, :overwrite],
-    desc: 'Allow overwriting existing files'
-  cmd.switch :stdout,
-    desc: 'Print results directly to stdout'
-
   cmd.action do |opts, params, args|
     Commands::Parse.new(opts).run(args, params)
   end
 end
-
 
 desc 'Print license information'
 command :license do |cmd|
