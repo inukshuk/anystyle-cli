@@ -29,7 +29,7 @@ switch 'stdout',
   desc: 'Print results directly to stdout'
 
 flag 'adapter',
-  default_value: 'gdbm',
+  default_value: 'ruby',
   arg_name: 'name',
   must_match: %w{ ruby memory gdbm },
   desc: 'Set the dictionary adapter'
