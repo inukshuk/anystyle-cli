@@ -2,7 +2,7 @@ module AnyStyle
   module CLI
     module Commands
       class Base
-        attr_reader :options, :params
+        attr_reader :options, :params, :output_folder
 
         def initialize(options)
           @options = options
@@ -16,7 +16,43 @@ module AnyStyle
           !!options[:verbose]
         end
 
-        private
+        def stdout?
+          !!params[:stdout]
+        end
+
+        def overwrite?
+          !!params[:overwrite]
+        end
+
+        def extsub(path, new_extname)
+          basename = path.basename(path.extname)
+          path.dirname.join("#{basename}#{new_extname}")
+        end
+
+        def transpose(path, base_path)
+          if output_folder.nil?
+            path
+          else
+            output_folder.join(path.relative_path_from(base_path))
+          end
+        end
+
+        def set_output_folder(path)
+          @output_folder = Pathname.new(path).expand_path unless path.nil?
+        ensure
+          unless @output_folder.nil?
+            if @output_folder.exist?
+              raise ArgumentError,
+                "not a directory: #{path}" unless @output_folder.directory?
+            else
+              @output_folder.mkdir
+            end
+          end
+        end
+
+        def say(*args)
+          STDERR.print(*args) if verbose?
+        end
 
         def walk(input)
           path = Pathname(input).expand_path
@@ -31,12 +67,17 @@ module AnyStyle
           end
         end
 
-        def say(*args)
-          STDERR.puts(*args) if verbose?
-        end
-
-        def puts(*args)
-          STDOUT.puts(*args)
+        def write(content, path, base_path)
+          if stdout?
+            STDOUT.puts(content)
+          else
+            path = transpose(path, base_path)
+            if !overwrite? && File.exists?(path)
+              raise RuntimeError,
+                "file exists, use --overwrite to force saving: #{path}"
+            end
+            File.open(path, 'w+') { |f| f << content }
+          end
         end
       end
     end

@@ -2,20 +2,26 @@ module AnyStyle
   module CLI
     module Commands
       class Parse < Base
-        def run(*args, **params)
+        def run(args, params)
           super params
-          walk args[0] do |file, base|
-            say "Parsing #{file.relative_path_from(base)} ..."
-            dataset = parse(file.to_s.untaint)
+          set_output_folder args[1]
+          walk args[0] do |path, base_path|
+            say "Parsing #{path.relative_path_from(base_path)} ..."
+            dataset = parse(path.to_s.untaint)
+            say "#{dataset.length} references found.\n"
+
             params[:format].each do |fmt|
-              say "Formatting #{dataset.length} reference as #{fmt} ..."
-              puts format(dataset, fmt)
+              say "Formatting reference as #{fmt} ...\n"
+              res = format(dataset, fmt)
+              out = extsub(path, ".#{fmt}")
+              say "Writing #{out.relative_path_from(base_path)} ...\n"
+              write res, out, base_path
             end
           end
         end
 
-        def parse(file)
-          AnyStyle.parse(file, format: :wapiti)
+        def parse(path)
+          AnyStyle.parse(path, format: :wapiti)
         end
 
         def format(dataset, fmt)
@@ -32,7 +38,6 @@ module AnyStyle
             raise ArgumentError, "format not supported: #{fmt}"
           end
         end
-
       end
     end
   end
