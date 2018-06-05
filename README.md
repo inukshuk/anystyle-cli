@@ -4,7 +4,7 @@ AnyStyle Command Line Interface
 Synopsis
 --------
 
-    $ anystyle
+    $ anystyle --help
     NAME
         anystyle - Finds and parses bibliographic references
 
