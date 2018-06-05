@@ -52,7 +52,7 @@ arg :input
 arg :output, :optional
 command :find do |cmd|
   cmd.action do |opts, params, args|
-    Commands::Find.new(opts).run(*args, **params)
+    Commands::Find.new(opts).run(args, params)
   end
 end
 

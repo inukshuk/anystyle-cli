@@ -14,7 +14,7 @@ module AnyStyle
               say "no references found.\n"
             else
               say "#{ref.length} references found.\n"
-
+              dst = nil
               each_format do |fmt|
                 case fmt
                 when 'ttx'
@@ -28,8 +28,8 @@ module AnyStyle
                   res = ref.join("\n")
                 else
                   say "Formatting references as #{fmt} ...\n"
-                  dataset ||= parse(ref.join("\n"))
-                  res = format(dataset, fmt)
+                  dst ||= parse(ref.join("\n"))
+                  res = format(dst, fmt)
                 end
 
                 out = extsub(path, ".#{fmt}")
