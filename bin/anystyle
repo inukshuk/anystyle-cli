@@ -15,6 +15,8 @@ version '%s (cli %s, data %s)' % [
 subcommand_option_handling :normal
 arguments :strict
 
+wrap_help_text :verbatim
+
 accept(Array) { |value| value.split(',') }
 
 #config_file '.anystyle'
@@ -48,15 +50,88 @@ end
 
 
 desc 'Find and extract references from text documents'
+long_desc %{
+    This manual page documents the AnyStyle `find' command. AnyStyle `find'
+    analyzes PDF or text documents and extracts all references it finds.
+
+    The input argument can be a single PDF or text document, or a folder
+    containing multiple documents. The (optional) output argument specifies
+    the folder where the results shall be saved; if no output folder is
+    specified, results will be saved in the folder containing the input.
+
+    AnyStyle `find' supports the following formats:
+        bib     BibTeX (references only);
+        csl     CSL/JSON (references only);
+        json    AnyStyle JSON (references only);
+        ref     One reference per line, suitable for parser input;
+        txt     Plain text document;
+        ttx     Tagged document format, used for training the finder model;
+        xml     References only, XML, suitable for training the parser model.
+
+    You can specify multiple output formats, separated by commas.
+
+    Anlyzing PDF documents currently depends on `pdftotext' which must be
+    installed separately.
+
+EXAMPLES
+    anystyle -f csl,xml find thesis.pdf
+
+    Extract references from `thesis.pdf' and save them in `thesis.csl' and
+    `thesis.xml'.
+
+    anystyle -f bib find --no-layout thesis.pdf bib
+
+    Extract references from `thesis.pdf' in `no-layout' mode (e.g., use this
+    if your document uses a multi-column layout) and save them in BibTeX in
+    `./bib/thesis.bib'.
+}.lstrip
+
 arg :input
 arg :output, :optional
 command :find do |cmd|
+  cmd.switch 'layout',
+    default_value: true,
+    desc: 'Use layout mode for PDF text extraction'
+
   cmd.action do |opts, params, args|
     Commands::Find.new(opts).run(args, params)
   end
 end
 
+
 desc 'Parse and convert references'
+long_desc %{
+    This manual page documents the AnyStyle `parse' command. AnyStyle `parse'
+    segments references (one per line) and converts them into structured
+    formats.
+
+    The input argument can be a single text document containing one full
+    reference per line (blank lines will be ignored), or a folder containing
+    multiple documents. The (optional) output argument specifies
+    the folder where the results shall be saved; if no output folder is
+    specified, results will be saved in the folder containing the input.
+
+    AnyStyle `parse' supports the following formats:
+        bib     BibTeX (normalized);
+        csl     CSL/JSON (normalized);
+        json    AnyStyle JSON (normalized);
+        ref     One reference per line, suitable for parser input;
+        txt     Same as `ref';
+        xml     XML, suitable for training the parser model.
+
+    You can specify multiple output formats, separated by commas.
+
+EXAMPLES
+    anystyle -f json,xml parse biblio.txt
+
+    Extract references from `biblio.txt' and save them in `biblio.json' and
+    `biblio.xml'.
+
+    anystyle --stdout -f csl parse input.txt
+
+    Extract references from `input.txt' and print them to STDOUT in CSL/JSON.
+}.lstrip
+
 arg :input
 arg :output, :optional
 command :parse do |cmd|

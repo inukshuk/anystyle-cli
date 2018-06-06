@@ -2,14 +2,14 @@ module AnyStyle
   module CLI
     module Commands
       class Base
-        attr_reader :options, :params, :output_folder
+        attr_reader :options, :output_folder
 
         def initialize(options)
           @options = options
         end
 
-        def run(params)
-          @params = params
+        def run(args, params)
+          raise NotImplementedYet
         end
 
         def verbose?
@@ -28,8 +28,8 @@ module AnyStyle
           options[:format].each(&block)
         end
 
-        def find(input)
-          AnyStyle.finder.find(input, format: :wapiti)
+        def find(input, **opts)
+          AnyStyle.find(input, format: :wapiti, **opts)
         end
 
         def parse(input)

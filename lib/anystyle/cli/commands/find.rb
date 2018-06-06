@@ -3,11 +3,10 @@ module AnyStyle
     module Commands
       class Find < Base
         def run(args, params)
-          super params
           set_output_folder args[1]
           walk args[0] do |path, base_path|
             say "Analyzing #{path.relative_path_from(base_path)} ..."
-            doc = find(path.to_s.untaint)
+            doc = find(path.to_s.untaint, layout: params[:layout])
             ref = doc[0].references
 
             if ref.length == 0

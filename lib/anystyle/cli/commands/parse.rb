@@ -3,7 +3,6 @@ module AnyStyle
     module Commands
       class Parse < Base
         def run(args, params)
-          super params
           set_output_folder args[1]
           walk args[0] do |path, base_path|
             say "Parsing #{path.relative_path_from(base_path)} ..."
