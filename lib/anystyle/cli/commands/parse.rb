@@ -7,12 +7,11 @@ module AnyStyle
           walk args[0] do |path, base_path|
             say "Parsing #{path.relative_path_from(base_path)} ..."
             dataset = parse(path.to_s.untaint)
-            say "#{dataset.length} references found.\n"
+            say "#{dataset.length} references found."
             each_format do |fmt|
-              say "Formatting references as #{fmt} ...\n"
               res = format(dataset, fmt)
               out = extsub(path, ".#{fmt}")
-              say "Writing #{out.relative_path_from(base_path)} ...\n"
+              say "Writing #{out.relative_path_from(base_path)} ..."
               write res, out, base_path
             end
           end

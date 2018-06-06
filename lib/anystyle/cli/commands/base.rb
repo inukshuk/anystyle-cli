@@ -80,7 +80,7 @@ module AnyStyle
         end
 
         def say(*args)
-          STDERR.print(*args) if verbose?
+          STDERR.puts(*args) if verbose?
         end
 
         def walk(input)

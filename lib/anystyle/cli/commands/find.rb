@@ -10,29 +10,25 @@ module AnyStyle
             ref = doc[0].references
 
             if ref.length == 0
-              say "no references found.\n"
+              say "no references found."
             else
-              say "#{ref.length} references found.\n"
+              say "#{ref.length} references found."
               dst = nil
               each_format do |fmt|
                 case fmt
                 when 'ttx'
-                  say "Formatting document as #{fmt} ...\n"
                   res = doc.to_txt tagged: true
                 when 'txt'
-                  say "Formatting document as #{fmt} ...\n"
                   res = doc.to_txt tagged: false
                 when 'ref'
-                  say "Formatting references as #{fmt} ...\n"
                   res = ref.join("\n")
                 else
-                  say "Formatting references as #{fmt} ...\n"
                   dst ||= parse(ref.join("\n"))
                   res = format(dst, fmt)
                 end
 
                 out = extsub(path, ".#{fmt}")
-                say "Writing #{out.relative_path_from(base_path)} ...\n"
+                say "Writing #{out.relative_path_from(base_path)} ..."
                 write res, out, base_path
               end
             end
