@@ -17,9 +17,9 @@ module AnyStyle
               each_format do |fmt|
                 case fmt
                 when 'ttx'
-                  res = doc.to_txt tagged: true
+                  res = doc.to_s tagged: true
                 when 'txt'
-                  res = doc.to_txt tagged: false
+                  res = doc.to_s tagged: false
                 when 'ref'
                   res = ref.join("\n")
                 else
