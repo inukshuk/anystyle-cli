@@ -83,16 +83,28 @@ module AnyStyle
           STDERR.puts(*args) if verbose?
         end
 
+        def warn(*args)
+          STDERR.puts(*args)
+        end
+
         def walk(input)
           path = Pathname(input).expand_path
           raise ArgumentError, "path does not exist: #{input}" unless path.exist?
 
           if path.directory?
             path.each_child do |file|
-              yield file, path unless file.directory?
+              begin
+                yield file, path unless file.directory?
+              rescue => e
+                warn "Error processing '#{file.relative_path_from(path)}': #{e.message}"
+              end
             end
           else
-            yield path, path.dirname
+            begin
+              yield path, path.dirname
+            rescue => e
+              warn "Error processing '#{path.basename}': #{e.message}"
+            end
           end
         end
 
