@@ -83,8 +83,11 @@ module AnyStyle
           STDERR.puts(*args) if verbose?
         end
 
-        def warn(*args)
-          STDERR.puts(*args)
+        def report(error, file)
+          STDERR.puts "Error: #{error.message}"
+          STDERR.puts "  File: #{file}"
+          STDERR.puts "  Trace: #{error.backtrace[0]}"
+          STDERR.puts "         #{error.backtrace[1]}"
         end
 
         def walk(input)
@@ -96,14 +99,14 @@ module AnyStyle
               begin
                 yield file, path unless file.directory?
               rescue => e
-                warn "Error processing '#{file.relative_path_from(path)}': #{e.message}"
+                report e, file.relative_path_from(path)
               end
             end
           else
             begin
               yield path, path.dirname
             rescue => e
-              warn "Error processing '#{path.basename}': #{e.message}"
+              report e, path.basename
             end
           end
         end
