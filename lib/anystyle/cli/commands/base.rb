@@ -84,10 +84,11 @@ module AnyStyle
         end
 
         def report(error, file)
-          STDERR.puts "Error: #{error.message}"
-          STDERR.puts "  File: #{file}"
-          STDERR.puts "  Trace: #{error.backtrace[0]}"
-          STDERR.puts "         #{error.backtrace[1]}"
+          STDERR.puts "Error processing `#{file}'"
+          STDERR.puts "  #{error.message}"
+          STDERR.puts "  #{error.backtrace[0]}"
+          STDERR.puts "  #{error.backtrace[1]}"
+          STDERR.puts "  ..."
         end
 
         def walk(input)
