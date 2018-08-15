@@ -7,7 +7,7 @@ module AnyStyle
           walk args[0] do |path, base_path|
             say "Analyzing #{path.relative_path_from(base_path)} ..."
             doc = find(path.to_s.untaint, layout: params[:layout])
-            ref = doc[0].references
+            ref = doc[0].references(normalize_blocks: !params[:solo])
 
             if ref.length == 0
               say "no references found."

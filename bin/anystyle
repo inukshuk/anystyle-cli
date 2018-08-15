@@ -93,6 +93,10 @@ command :find do |cmd|
     default_value: true,
     desc: 'Use layout mode for PDF text extraction'
 
+  cmd.switch 'solo',
+    default_value: false,
+    desc: 'Include references outside of reference sections'
+
   cmd.action do |opts, params, args|
     Commands::Find.new(opts).run(args, params)
   end
