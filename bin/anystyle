@@ -104,6 +104,17 @@ EXAMPLES
     Extract references from `thesis.pdf' in `no-layout' mode (e.g., use this
     if your document uses a multi-column layout) and save them in BibTeX in
     `./bib/thesis.bib'.
+
+    anystyle find --crop 72 thesis.pdf -
+
+    Extract references from `thesis.pdf' cropping away one inch (72pt) from
+    each page border and print the results to STDOUT.
+
+    anystyle find --crop 72,28 thesis.pdf -
+
+    Extract references from `thesis.pdf' cropping away one inch (72pt) from
+    each page's left and right border, approx. 1cm (28pt) from the top
+    and bottom.
 }.lstrip
 
 arg :input
@@ -116,6 +127,12 @@ command :find do |cmd|
   cmd.switch 'solo',
     default_value: false,
     desc: 'Include references outside of reference sections'
+
+  cmd.flag ['C', 'crop'],
+    arg_name: 'pt',
+    type: Array,
+    must_match: /\d+(,\d+)?|\d+,\d+(,-?\d+){2}/,
+    desc: 'Set cropping boundary for text extraction'
 
   cmd.action do |opts, params, args|
     Commands::Find.new(opts).run(args, params)
@@ -202,7 +219,8 @@ EXAMPLES
     anystyle train data.xml my-model.mod
 
     Creates a new parser model based on the XML training set and saves it
-    as `my-model.mod'.
+    as `my-model.mod'. To use your model use the global `--finder-model'
+    or `--parser-model' flags.
 }.lstrip
 
 arg :input

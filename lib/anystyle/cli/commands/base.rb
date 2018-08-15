@@ -28,8 +28,11 @@ module AnyStyle
           options[:format].each(&block)
         end
 
-        def find(input, **opts)
-          AnyStyle.find(input, format: :wapiti, **opts)
+        def find(input, opts = {})
+          AnyStyle.find(input,
+            format: :wapiti,
+            layout: opts[:layout],
+            crop: opts[:crop].nil? ? nil : opts[:crop].map(&:to_i))
         end
 
         def parse(input)
