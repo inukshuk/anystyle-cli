@@ -30,6 +30,14 @@ switch ['w', 'overwrite'],
 switch 'stdout',
   desc: 'Print results directly to stdout'
 
+flag ['F', 'finder-model'],
+  arg_name: 'file',
+  desc: 'Set the finder model file'
+
+flag ['P', 'parser-model'],
+  arg_name: 'file',
+  desc: 'Set the parser model file'
+
 flag 'adapter',
   default_value: 'ruby',
   arg_name: 'name',
@@ -46,6 +54,18 @@ flag ['f', 'format'],
 
 pre do |opts|
   AnyStyle::Dictionary.defaults[:adapter] = opts[:adapter]
+
+  unless opts[:'finder-model'].nil?
+    AnyStyle::Finder.defaults[:model] =
+      File.expand_path(opts[:'finder-model']).untaint
+  end
+
+  unless opts[:'parser-model'].nil?
+    AnyStyle::Parser.defaults[:model] =
+      File.expand_path(opts[:'parser-model']).untaint
+  end
+
+  AnyStyle
 end
 
 
@@ -166,6 +186,30 @@ arg :input
 command :check do |cmd|
   cmd.action do |opts, params, args|
     Commands::Check.new(opts).run(args, params)
+  end
+end
+
+
+desc 'Create a new finder or parser model'
+long_desc %{
+    This manual page documents the AnyStyle `train' command. AnyStyle `train'
+    creates a new finder or parser model based on the supplied training sets.
+
+    The input argument can be a XML document, or a folder containing multiple
+    TTX documents.
+
+EXAMPLES
+    anystyle train data.xml my-model.mod
+
+    Creates a new parser model based on the XML training set and saves it
+    as `my-model.mod'.
+}.lstrip
+
+arg :input
+arg :output, :optional
+command :train do |cmd|
+  cmd.action do |opts, params, args|
+    Commands::Train.new(opts).run(args, params)
   end
 end
 
