@@ -144,6 +144,31 @@ command :parse do |cmd|
   end
 end
 
+desc 'Check tagged documents or references'
+long_desc %{
+    This manual page documents the AnyStyle `check' command. AnyStyle `check'
+    analyzes tagged text documents or references.
+
+    The input argument can be a single TTX or XML document, or a folder
+    containing multiple documents.
+
+    AnyStyle `check' supports the following input formats:
+        ttx     Tagged document format, used for training the finder model;
+        xml     References only, XML, suitable for training the parser model.
+
+EXAMPLES
+    anystyle check training-data.xml
+
+    Checks all references in the XML file and prints a report to STDOUT.
+}.lstrip
+
+arg :input
+command :check do |cmd|
+  cmd.action do |opts, params, args|
+    Commands::Check.new(opts).run(args, params)
+  end
+end
+
 desc 'Print license information'
 command :license do |cmd|
   cmd.action do
