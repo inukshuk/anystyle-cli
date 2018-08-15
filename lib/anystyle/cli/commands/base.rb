@@ -67,7 +67,12 @@ module AnyStyle
         end
 
         def set_output_folder(path)
-          @output_folder = Pathname.new(path).expand_path unless path.nil?
+          case path
+          when nil, '-'
+            options[:stdout] = true
+          else
+            @output_folder = Pathname.new(path).expand_path
+          end
         ensure
           unless @output_folder.nil?
             if @output_folder.exist?
