@@ -38,6 +38,15 @@ flag ['P', 'parser-model'],
   arg_name: 'file',
   desc: 'Set the parser model file'
 
+flag 'pdftotext',
+  arg_name: 'path',
+  desc: 'Set the path for pdftotext'
+
+flag 'pdfinfo',
+  arg_name: 'path',
+  desc: 'Set the path for pdfinfo'
+
+
 flag 'adapter',
   default_value: 'ruby',
   arg_name: 'name',
@@ -63,6 +72,16 @@ pre do |opts|
   unless opts[:'parser-model'].nil?
     AnyStyle::Parser.defaults[:model] =
       File.expand_path(opts[:'parser-model']).untaint
+  end
+
+  unless opts[:pdftotext].nil?
+    AnyStyle::Finder.defaults[:pdftotext] =
+      opts[:pdftotext].untaint
+  end
+
+  unless opts[:pdfinfo].nil?
+    AnyStyle::Finder.defaults[:pdfinfo] =
+      opts[:pdfinfo].untaint
   end
 
   AnyStyle

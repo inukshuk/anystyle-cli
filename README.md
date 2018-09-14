@@ -17,6 +17,8 @@ anystyle --help
         -P, --parser-model=file - Set the parser model file (default: none)
         --adapter=name          - Set the dictionary adapter (default: ruby)
         -f, --format=name       - Set the output format (default: ["json"])
+        --pdfinfo=path          - Set the path for pdfinfo (default: none)
+        --pdftotext=path        - Set the path for pdftotext (default: none)
         --help                  - Show this message
         --[no-]stdout           - Print results directly to stdout
         --[no-]verbose          - Print status messages to stderr
