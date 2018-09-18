@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.executables  = ['anystyle']
   s.required_ruby_version = '>= 2.3'
 
-  s.add_runtime_dependency('anystyle', '~>1.2')
+  s.add_runtime_dependency('anystyle', '~>1.3')
   s.add_runtime_dependency('bibtex-ruby', '~>4.4')
   s.add_runtime_dependency('gli', '~>2.17')
 
