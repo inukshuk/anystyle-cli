@@ -21,7 +21,7 @@ module AnyStyle
             AnyStyle.parser.train path.to_s.untaint
             AnyStyle.parser.model
           when File.directory?(path)
-            AnyStyle.finder.train path.to_s.untaint
+            AnyStyle.finder.train Dir[File.join(path, '*.ttx')].map(&:untaint)
             AnyStyle.finder.model
           else
             raise ArgumentError, "cannot train input: #{path}"
