@@ -6,5 +6,5 @@ group :development, :test do
 end
 
 group :debug do
-  gem 'byebug', require: false
+  gem 'debug', require: false
 end
