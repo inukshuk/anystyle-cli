@@ -11,17 +11,17 @@ module AnyStyle
           if args[1].nil?
             model.save
           else
-            model.save File.expand_path(args[1]).untaint
+            model.save File.expand_path(args[1])
           end
         end
 
         def train(path)
           case
           when File.extname(path) == '.xml'
-            AnyStyle.parser.train path.to_s.untaint
+            AnyStyle.parser.train path.to_s
             AnyStyle.parser.model
           when File.directory?(path)
-            AnyStyle.finder.train Dir[File.join(path, '*.ttx')].map(&:untaint)
+            AnyStyle.finder.train Dir[File.join(path, '*.ttx')]
             AnyStyle.finder.model
           else
             raise ArgumentError, "cannot train input: #{path}"

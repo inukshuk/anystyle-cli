@@ -6,7 +6,7 @@ module AnyStyle
           set_output_folder args[1]
           walk args[0] do |path, base_path|
             say "Analyzing #{path.relative_path_from(base_path)} ..."
-            doc = find(path.to_s.untaint, params)
+            doc = find(path.to_s, params)
             ref = doc[0].references(normalize_blocks: !params[:solo])
 
             if ref.length == 0

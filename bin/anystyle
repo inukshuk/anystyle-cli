@@ -66,22 +66,22 @@ pre do |opts|
 
   unless opts[:'finder-model'].nil?
     AnyStyle::Finder.defaults[:model] =
-      File.expand_path(opts[:'finder-model']).untaint
+      File.expand_path(opts[:'finder-model'])
   end
 
   unless opts[:'parser-model'].nil?
     AnyStyle::Parser.defaults[:model] =
-      File.expand_path(opts[:'parser-model']).untaint
+      File.expand_path(opts[:'parser-model'])
   end
 
   unless opts[:pdftotext].nil?
     AnyStyle::Finder.defaults[:pdftotext] =
-      opts[:pdftotext].untaint
+      opts[:pdftotext]
   end
 
   unless opts[:pdfinfo].nil?
     AnyStyle::Finder.defaults[:pdfinfo] =
-      opts[:pdfinfo].untaint
+      opts[:pdfinfo]
   end
 
   AnyStyle
