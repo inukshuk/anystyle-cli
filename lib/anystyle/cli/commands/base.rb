@@ -36,7 +36,7 @@ module AnyStyle
         end
 
         def parse(input)
-          AnyStyle.parse(input, format: :wapiti)
+          AnyStyle.parse(Wapiti::Dataset.open(input), format: :wapiti)
         end
 
         def format(dataset, fmt)
