@@ -35,8 +35,12 @@ module AnyStyle
             crop: opts[:crop].nil? ? nil : opts[:crop].map(&:to_i))
         end
 
+        def parse_file(file)
+          parse(Wapiti::Dataset.open(input))
+        end
+
         def parse(input)
-          AnyStyle.parse(Wapiti::Dataset.open(input), format: :wapiti)
+          AnyStyle.parse(input, format: :wapiti)
         end
 
         def format(dataset, fmt)
