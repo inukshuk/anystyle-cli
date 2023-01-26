@@ -36,7 +36,7 @@ module AnyStyle
         end
 
         def parse_file(file)
-          parse(Wapiti::Dataset.open(input))
+          parse(Wapiti::Dataset.open(file))
         end
 
         def parse(input)
