@@ -14,9 +14,9 @@ module AnyStyle
         def check(path)
           case path.extname
           when '.ttx'
-            AnyStyle.finder.check path.to_s
+            AnyStyle.finder.check Wapiti::Dataset.open(path.to_s)
           when '.xml'
-            AnyStyle.parser.check path.to_s
+            AnyStyle.parser.check Wapiti::Dataset.open(path.to_s)
           else
             raise ArgumentError, "cannot check untagged input: #{path}"
           end

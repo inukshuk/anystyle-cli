@@ -18,7 +18,7 @@ module AnyStyle
         def train(path)
           case
           when File.extname(path) == '.xml'
-            AnyStyle.parser.train path.to_s
+            AnyStyle.parser.train Wapiti::Dataset.open(path.to_s)
             AnyStyle.parser.model
           when File.directory?(path)
             AnyStyle.finder.train Dir[File.join(path, '*.ttx')]
