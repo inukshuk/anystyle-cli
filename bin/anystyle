@@ -200,6 +200,37 @@ command :parse do |cmd|
   end
 end
 
+
+desc 'Parse a single reference'
+long_desc %{
+    This manual page documents the AnyStyle `parse_reference' command.
+
+    The input argument will be the reference to be parsed
+
+    AnyStyle `parse_reference' supports the following formats:
+        bib     BibTeX (normalized);
+        csl     CSL/JSON (normalized);
+        json    AnyStyle JSON (normalized);
+        ref     One reference per line, suitable for parser input;
+        txt     Same as `ref';
+        xml     XML, suitable for training the parser model.
+
+    You can specify multiple output formats, separated by commas.
+
+EXAMPLES
+    anystyle -f json,xml parse_reference "A. Author, Some title, publisher name, pp103-102, DOI:10.000/xyz"
+
+    Parse the input reference and print the result to STDOUT in JSON and XML
+
+}.lstrip
+
+arg :input
+command :parse_reference do |cmd|
+  cmd.action do |opts, params, args|
+    Commands::ParseReference.new(opts).run(args, params)
+  end
+end
+
 desc 'Check tagged documents or references'
 long_desc %{
     This manual page documents the AnyStyle `check' command. AnyStyle `check'
