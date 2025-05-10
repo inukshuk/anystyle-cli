@@ -50,7 +50,7 @@ module AnyStyle
           when 'csl'
             JSON.pretty_generate AnyStyle.parser.format_csl(dataset)
           when 'ris'
-            JSON.pretty_generate AnyStyle.parser.format_ris(dataset)
+            AnyStyle.parser.format_ris(dataset).to_s
           when 'json'
             JSON.pretty_generate AnyStyle.parser.format_hash(dataset)
           when 'ref', 'txt'
