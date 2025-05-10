@@ -57,7 +57,7 @@ flag ['f', 'format'],
   default_value: ['json'],
   arg_name: 'name',
   type: Array,
-  must_match: /(bib|csl|json|ref|ttx|txt|xml)(,(bib|csl|json|ref|ttx|txt|xml))*/,
+  must_match: /(bib|csl|ris|json|ref|ttx|txt|xml)(,(bib|csl|ris|json|ref|ttx|txt|xml))*/,
   desc: 'Set the output format'
 
 
@@ -101,6 +101,7 @@ long_desc %{
     AnyStyle `find' supports the following formats:
         bib     BibTeX (references only);
         csl     CSL/JSON (references only);
+        ris     RIS (references only);
         json    AnyStyle JSON (references only);
         ref     One reference per line, suitable for parser input;
         txt     Plain text document;
