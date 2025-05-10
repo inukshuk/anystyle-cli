@@ -49,6 +49,8 @@ module AnyStyle
             AnyStyle.parser.format_bibtex(dataset).to_s
           when 'csl'
             JSON.pretty_generate AnyStyle.parser.format_csl(dataset)
+          when 'ris'
+            JSON.pretty_generate AnyStyle.parser.format_ris(dataset)
           when 'json'
             JSON.pretty_generate AnyStyle.parser.format_hash(dataset)
           when 'ref', 'txt'
