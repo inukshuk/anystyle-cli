@@ -53,6 +53,7 @@ anystyle help find
         AnyStyle `find' supports the following formats:
             bib     BibTeX (references only);
             csl     CSL/JSON (references only);
+            ris     RIS (references only);
             json    AnyStyle JSON (references only);
             ref     One reference per line, suitable for parser input;
             txt     Plain text document;
@@ -117,6 +118,7 @@ anystyle help parse
         AnyStyle `parse' supports the following formats:
             bib     BibTeX (normalized);
             csl     CSL/JSON (normalized);
+            ris     ris (normalized);
             json    AnyStyle JSON (normalized);
             ref     One reference per line, suitable for parser input;
             txt     Same as `ref';
